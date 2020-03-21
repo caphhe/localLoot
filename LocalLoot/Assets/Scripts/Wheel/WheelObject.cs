@@ -29,6 +29,9 @@ public class WheelObject : MonoBehaviour
 			if (companyState)
 			{
 				transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+			} else
+			{
+				transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 90, 0);
 			}
 		} else
 		{
@@ -80,7 +83,13 @@ public class WheelObject : MonoBehaviour
 
 	public void WiggleWhenSelecting (float t)
 	{
-		transform.rotation = Quaternion.Euler(0, 0, wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle);
+		if (companyState)
+		{
+			transform.rotation = Quaternion.Euler(0, 0, wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle);
+		} else
+		{
+			transform.rotation = Quaternion.Euler(wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle, 0, 0);
+		}
 	}
 
 	public void EndWiggle()
