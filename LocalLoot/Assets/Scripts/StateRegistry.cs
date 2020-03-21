@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-
+[Serializable]
 public class StateRegistryEntry
 {
     public string stateName => _stateName;
