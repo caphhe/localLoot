@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d5079a2eaf01d41ab36bdf474f2270, type: 3}
+  m_Name: config_default
+  m_EditorClassIdentifier: 
+  _minMoney: 0
+  _maxMoney: 50
+  _moneySliderChangeTime: 0.25
+  lootBoxPrefabs:
+  - _prefab: {fileID: 6093935593452491438, guid: 4ff424f63902fd341a98c3ccde6951cc,
+      type: 3}
+    _money: 0
+  - _prefab: {fileID: 7916879152910004743, guid: b35178a99c256ba4680423fc34db6922,
+      type: 3}
+    _money: 25
+  - _prefab: {fileID: 6262824142637659538, guid: 40cf2934f6930cb4f8f85f9332e34290,
+      type: 3}
+    _money: 40
