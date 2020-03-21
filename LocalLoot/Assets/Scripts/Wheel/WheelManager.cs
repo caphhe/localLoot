@@ -247,7 +247,7 @@ public class WheelManager : MonoBehaviour
 
 	private void HoldTouchPosition (Vector2 screenPos)
 	{
-		if (touchHolding && Vector2.Distance(screenPos, startTouchPos) < 5)
+		if (touchHolding && Vector2.Distance(screenPos, startTouchPos) < 40)
 		{
 			Debug.Log("Holding");
 			centerBox.WiggleWhenSelecting((Time.time - HoldingStartTime) / holdToSelectTime);

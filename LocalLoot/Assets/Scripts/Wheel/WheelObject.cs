@@ -9,6 +9,7 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private AnimationCurve flipCurve = null;
 	[SerializeField] private TextMeshPro companyNameText = null;
 	[SerializeField] private TextMeshPro voucherNameText = null;
+	[SerializeField] private GameObject voucherNameObj = null;
 	[SerializeField] private GameObject companyLogoObj = null;
 	[SerializeField] private GameObject boxObj = null;
 	[SerializeField] private AnimationCurve wiggleWhenSelectingCurve = null;
@@ -62,6 +63,11 @@ public class WheelObject : MonoBehaviour
 		Material companyLogoMat = companyLogoObj.GetComponent<Renderer>().material;
 		companyLogoMat.SetTexture("_BaseMap", company.companyLogo);
 		companyNameText.text = company.companyName;
+
+		companyNameText.gameObject.SetActive(true);
+		companyLogoObj.SetActive(true);
+		voucherNameObj.SetActive(false);
+
 	
 	}
 
@@ -71,6 +77,9 @@ public class WheelObject : MonoBehaviour
 		Material boxMat = boxObj.GetComponent<Renderer>().material;
 		boxMat.SetColor("_BaseColor", company.companyColor);
 		voucherNameText.text = company.vouchers[voucherID].name;
+		companyNameText.gameObject.SetActive(false);
+		companyLogoObj.SetActive(false);
+		voucherNameObj.SetActive(true);
 	}
 
 	public void StateChanged (bool companyState)
