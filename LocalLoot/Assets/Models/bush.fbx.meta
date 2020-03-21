@@ -1,38 +1,8 @@
 fileFormatVersion: 2
-guid: 382d8c8195914e44b95e8881ee7c0f99
+guid: 47ae4ad044081d24daf3599644051c77
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable:
-  - first:
-      74: 7605694136557076574
-    second: Package|MarkAction
-  - first:
-      74: -1495676830319081352
-    second: Package|PackageAction
-  - first:
-      74: 3373719228716991482
-    second: Mark|MarkAction
-  - first:
-      74: -4676662829501783633
-    second: BondRight|BondLeftAction
-  - first:
-      74: 7508451146769170324
-    second: BondRight|BondRightAction
-  - first:
-      74: 4543169449948808890
-    second: BondRight|MarkAction
-  - first:
-      74: -8316398449869029005
-    second: BondRight|PackageAction
-  - first:
-      74: -5194936966459797566
-    second: BondLeft|BondLeftAction
-  - first:
-      74: 8870169072393372563
-    second: BondLeft|MarkAction
-  - first:
-      74: -4940482358841794320
-    second: BondLeft|PackageAction
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 1
