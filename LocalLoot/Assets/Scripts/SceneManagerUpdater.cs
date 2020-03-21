@@ -9,17 +9,22 @@ public class SceneManagerUpdater : StateMachineBehaviour
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         base.OnStateUpdate(animator, animatorStateInfo, layerIndex);
-        foreach (ISceneUpdatable updatable in updatables)
-            updatable.OnUpdate();
+        if (updatables != null)
+        {
+            foreach (ISceneUpdatable updatable in updatables)
+                updatable.OnUpdate();
+        }
         
     }
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         base.OnStateEnter(animator, stateInfo, layerIndex);
-        foreach (ISceneUpdatable updatable in updatables)
-            updatable.OnEnter();
-
+        if (updatables != null)
+        {
+            foreach (ISceneUpdatable updatable in updatables)
+                updatable.OnEnter();
+        }
     }
 
     internal void AddReference(ISceneUpdatable mb)

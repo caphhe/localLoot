@@ -17,6 +17,16 @@ public class SceneManager : MonoBehaviour
         Init();
     }
 
+    void ResetAnimatorState()
+    {
+        animator.SetBool("StoreSelected", false);
+        animator.SetBool("CouponSelected", false);
+        animator.SetBool("LootboxReadyForOpen", false);
+        animator.SetBool("LootboxOnGround", false);
+        animator.SetBool("DonationAmountConfirmed", false);
+        animator.SetBool("LootboxOpened", false);
+    }
+
     private void Init()
     {
         stateMachineBehaviours = animator.GetBehaviours<SceneManagerUpdater>();
@@ -25,23 +35,27 @@ public class SceneManager : MonoBehaviour
         {
             if (!(mb is ISceneUpdatable))
                 continue;
+            ProcessSceneUpdatable(mb);
+        }
+    }
 
-            ISceneUpdatable sceneUpdatable = (ISceneUpdatable)mb;
-            foreach (string stateName in sceneUpdatable.targetStateNames)
+    public void ProcessSceneUpdatable(MonoBehaviour mb)
+    {
+        ISceneUpdatable sceneUpdatable = (ISceneUpdatable)mb;
+        foreach (string stateName in sceneUpdatable.targetStateNames)
+        {
+            int fullPathHash = Animator.StringToHash("Base Layer." + stateName);
+            int stateHash = Animator.StringToHash(stateName);
+
+            if (animator.HasState(0, stateHash))
             {
-                int fullPathHash = Animator.StringToHash("Base Layer." + stateName);
-                int stateHash = Animator.StringToHash(stateName);
-
-                if (animator.HasState(0, stateHash))
+                foreach (StateMachineBehaviour stateMachineBehaviour in animator.GetBehaviours(fullPathHash, 0))
                 {
-                    foreach (StateMachineBehaviour stateMachineBehaviour in animator.GetBehaviours(fullPathHash, 0))
-                    {
-                        if (!(stateMachineBehaviour is SceneManagerUpdater))
-                            continue;
+                    if (!(stateMachineBehaviour is SceneManagerUpdater))
+                        continue;
 
-                        ((SceneManagerUpdater)stateMachineBehaviour).AddReference(sceneUpdatable);
-                        sceneUpdatable.OnInit(stateName);
-                    }
+                    ((SceneManagerUpdater)stateMachineBehaviour).AddReference(sceneUpdatable);
+                    sceneUpdatable.OnInit(stateName);
                 }
             }
         }

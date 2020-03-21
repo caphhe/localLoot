@@ -47,7 +47,7 @@ public class LootboxAwesomenessController : MonoBehaviour
         currentSelectedTuple = changeCandidate;
         if (lootBoxObject != null)
             Destroy(lootBoxObject);
-        GameObject inst = Instantiate(currentSelectedTuple.prefab, lootBoxImmediateParent);
+        GameObject inst = GameManager.Instantiate(currentSelectedTuple.prefab, lootBoxImmediateParent);
         inst.transform.localPosition = Vector3.zero;
         inst.transform.rotation = Quaternion.identity;
         lootBoxObject = inst;

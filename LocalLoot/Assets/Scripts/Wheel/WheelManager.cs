@@ -76,7 +76,7 @@ public class WheelManager : MonoBehaviour
 
 	private void AddBox ()
 	{
-		var box = Instantiate(boxPrefab, transform);
+		var box = GameManager.Instantiate(boxPrefab, transform);
 		boxes.Add(box);
 		box.transform.position = GetPostitonForBox(boxes.Count - 1, true);
 

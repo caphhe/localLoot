@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
-[RequireComponent(typeof(Rigidbody))]
-public class CameraTransitionOnStopMove : MonoBehaviour
+public class CameraTransitionOnStopMove : MonoBehaviour, ISceneUpdatable
 {
     [SerializeField]
     CinemachineVirtualCamera cm1, cm2;
@@ -13,16 +12,21 @@ public class CameraTransitionOnStopMove : MonoBehaviour
     private bool initialVelocityMet;
     bool used;
 
-    // Start is called before the first frame update
-    void Start()
+    public List<string> targetStateNames => _targetStateNames;
+    [SerializeField] List<string> _targetStateNames;
+
+    public void OnEnter()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = gameObject.AddComponent<Rigidbody>();
+    }
+
+    public void OnInit(string stateName)
+    {
         initialVelocityMet = false;
         used = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnUpdate()
     {
         if (used) return;
         if (!initialVelocityMet &&
@@ -32,10 +36,9 @@ public class CameraTransitionOnStopMove : MonoBehaviour
         if (rb.velocity.magnitude < velocityForTransition && initialVelocityMet)
         {
             cm2.gameObject.SetActive(true);
-       
+
             cm1.Priority = -1;
             used = true;
         }
     }
-
 }
