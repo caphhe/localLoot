@@ -5,6 +5,10 @@ using UnityEngine;
 public class ShakeCameraOnFloorHit : MonoBehaviour
 {
     bool hasBeenShook = false;
+    private void Awake()
+    {
+        
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (hasBeenShook)
