@@ -27,15 +27,12 @@ public class WheelManager : MonoBehaviour
 	[SerializeField] private float speed = 1f;
 	private float userSpeed = 0;
 	private List<GameObject> boxes = new List<GameObject>();
-	private Rigidbody rb; 
 
 	private Vector2 lastTouchPos = new Vector2 (-1, -1);
 	
 	// Start is called before the first frame update
     void Start()
     {
-		rb = gameObject.GetComponent<Rigidbody>();
-		rb.centerOfMass = gameObject.transform.position;
         for(int i = 0; i < visibleBoxes; i++)
 		{
 			AddBox();
@@ -107,18 +104,18 @@ public class WheelManager : MonoBehaviour
 
 
 
-            float angleSegment = (Mathf.Deg2Rad * (transform.rotation.eulerAngles.x - (distanceInDegrees / 2.0f))) % distanceRad;
-            float sinDist = Mathf.Sin(transform.rotation.x * Mathf.Deg2Rad) - Mathf.Sin(angleSegment);
-            float roundedSpeed = Mathf.Round(100.0f * (Mathf.Asin(sinDist)));
-            roundedSpeed = roundedSpeed / 100.0f;
-            roundedSpeed *= Mathf.Rad2Deg;
-            if (Mathf.Abs(roundedSpeed) > 0.0f)
+            float angleSegment = (transform.rotation.eulerAngles.x - (distanceInDegrees / 2.0f)) % distanceInDegrees;
+            float dir = Mathf.DeltaAngle(transform.rotation.x, angleSegment);
+            dir = dir > 180.0f ? 360.0f - dir : dir;
+            float roundedDir = Mathf.Round(10.0f * dir);
+            roundedDir = roundedDir / 10.0f;
+            if (Mathf.Abs(roundedDir) > 0.0f)
             {
-                speed += snapForce / roundedSpeed * Time.deltaTime;
+                speed += (snapForce / roundedDir) * Time.deltaTime;
             }
             else
             {
-                speed *= 1 / snapForce;
+                speed = 0;
             }
             speed *= speedDampening;
             speed *= 100.0f;
