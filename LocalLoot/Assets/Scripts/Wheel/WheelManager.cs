@@ -28,10 +28,7 @@ public class WheelManager : MonoBehaviour
 		gameObject.transform.Rotate(Vector3.right, speed);
 		if (Mathf.Abs(transform.rotation.eulerAngles.x % distanceInDegrees) < Mathf.Abs(speed))
 		{
-			Debug.Log("swap");
-
 			SwapBoxPosition(speed > 0);
-			
 		}
     }
 
