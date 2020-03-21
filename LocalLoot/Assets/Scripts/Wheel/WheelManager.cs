@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class WheelManager : MonoBehaviour
 {
@@ -22,28 +23,38 @@ public class WheelManager : MonoBehaviour
 	[SerializeField] private float userSpeedMod = 0.25f;
 	[SerializeField] private float snapForce = 1f;
 	[SerializeField] private AnimationCurve snapForceCurve = null;
+	[SerializeField] private AnimationCurve dampeningBelow1Curve = null;
+	[SerializeField] private Camera cam;
+	[SerializeField] private float holdToSelectTime = 1f;
 
-    WheelState state;
+	WheelState state;
 
 	[SerializeField] private float speed = 1f;
 	private float userSpeed = 0;
+	private bool lastUserDirectionPositive = true;
 	private List<GameObject> boxes = new List<GameObject>();
-	private Rigidbody rb;
 
-	private float wheelRotation = 0;
+	private float wheelRotation = 360;
 
 	private Vector2 lastTouchPos = new Vector2 (-1, -1);
+	private Vector2 startTouchPos = new Vector2 (-1, -1);
+	private bool touchHolding = false;
+
+	private float HoldingStartTime = 0;
+	private WheelObject centerBox;
+
+	private bool companyState = true;
+	
+	
 	
 	// Start is called before the first frame update
     void Start()
     {
-		rb = gameObject.GetComponent<Rigidbody>();
-		rb.centerOfMass = gameObject.transform.position;
-        for(int i = 0; i < visibleBoxes; i++)
+		for (int i = 0; i < visibleBoxes; i++)
 		{
 			AddBox();
 		}
-        distanceRad = Mathf.Deg2Rad * distanceInDegrees;
+
     }
 
     // Update is called once per frame
@@ -51,20 +62,22 @@ public class WheelManager : MonoBehaviour
     {
 		Touchinput();
 		CalcSpeed ();
-		//rb.AddTorque(new Vector3(userSpeed *100, 0, 0), ForceMode.Acceleration);
-		//gameObject.transform.Rotate(Vector3.right, speed * Time.deltaTime);
 		gameObject.transform.rotation = Quaternion.Euler(wheelRotation, 0, 0);
-		if (Mathf.Abs(wheelRotation % distanceInDegrees) < Mathf.Abs(speed))
+
+		float moduloPrep = (wheelRotation - distanceInDegrees / 2) % distanceInDegrees;
+		if (Mathf.Abs(moduloPrep) < Mathf.Abs(speed))
 		{
-			SwapBoxPosition(speed > 0);
+			SwapBoxPosition(speed >= 0);
 		}
+
     }
 
 	private void AddBox ()
 	{
 		var box = Instantiate(boxPrefab, transform);
 		boxes.Add(box);
-		box.transform.position = GetPostitonForBox(boxes.Count - 1);
+		box.transform.position = GetPostitonForBox(boxes.Count - 1, true);
+		box.GetComponent<WheelObject>().ReSkin();
 	}
 
 	private void SwapBoxPosition (bool topToBottom)
@@ -75,19 +88,24 @@ public class WheelManager : MonoBehaviour
 			movedBox = boxes[boxes.Count - 1];
 			boxes.RemoveAt(boxes.Count - 1);
 			boxes.Insert(0, movedBox);
-			movedBox.transform.position = GetPostitonForBox(0);
+			movedBox.transform.position = GetPostitonForBox(0, false);
 		} else
 		{
 			movedBox = boxes[0];
 			boxes.RemoveAt(0);
 			boxes.Add(movedBox);
-			movedBox.transform.position = GetPostitonForBox(boxes.Count - 1);
+			movedBox.transform.position = GetPostitonForBox(boxes.Count - 1, false);
 		}
+		movedBox.GetComponent<WheelObject>().ReSkin();
 	} 
 
-	private Vector3 GetPostitonForBox (int index)
+	private Vector3 GetPostitonForBox (int index, bool firstSpawn)
 	{
-		float angle = index * distanceInDegrees - 2 * distanceInDegrees;
+		float angle = index * distanceInDegrees - (int)(visibleBoxes / 2) * distanceInDegrees;
+		if (!firstSpawn)
+		{
+			angle += distanceInDegrees / 2;
+		}
 		return gameObject.transform.position - (Quaternion.Euler(angle, 0, 0) * new Vector3(0, 0, radius));
 	}
 
@@ -95,74 +113,33 @@ public class WheelManager : MonoBehaviour
 	{
 		float distanceToRest = (wheelRotation - distanceInDegrees/2) % distanceInDegrees - distanceInDegrees / 2;
 		float distanceToRestPercent = distanceToRest / (distanceInDegrees / 2);
-		Debug.Log("distance to rest: " + distanceToRest + " | " + distanceToRestPercent);
+		//Debug.Log("distance to rest: " + distanceToRest + " | " + distanceToRestPercent);
 		if (Input.GetMouseButton(0))
 		{
 			speed = userSpeed * userSpeedMod;
 			wheelRotation += speed;
-			
-			
 		}
         else
 		{
-
-
-
-
 			speed += (distanceToRestPercent) * snapForce * -1;
+			speed *= speedDampening - dampeningBelow1Curve.Evaluate(Mathf.Abs(speed));
 
-
-			//if (speed > 0.1f)
-			//{
-				speed *= speedDampening;
-			//}
-			//else
-			//{
-			//	speed *= speedDampening + (speed -0.1f);
-			//}
+			if (Mathf.Abs(speed) < 0.025f && Mathf.Abs(distanceToRestPercent) < 0.005f)
+			{
+				speed = 0;
+			}
 			wheelRotation += speed;
-
-
-
-			//         float angleSegment = (transform.rotation.eulerAngles.x - distanceInDegrees / 2);
-			//         float modAngles =  angleSegment % distanceInDegrees;
-			//         Debug.Log(modAngles);
-			//         float distFromRestPos = modAngles - distanceInDegrees / 2;
-			//float distFromRestPercent = distFromRestPos / (distanceInDegrees / 2);
-
-			//speed += distFromRestPercent * snapForce; 
-
-			//speed *= speedDampening;
-
-			/*
-
-            float angleSegment = (Mathf.Deg2Rad * (transform.rotation.eulerAngles.x - (distanceInDegrees / 2.0f))) % distanceRad;
-            float sinDist = Mathf.Sin(transform.rotation.x * Mathf.Deg2Rad) - Mathf.Sin(angleSegment);
-            float roundedSpeed = Mathf.Round(100.0f * (Mathf.Asin(sinDist)));
-            roundedSpeed = roundedSpeed / 100.0f;
-            roundedSpeed *= Mathf.Rad2Deg;
-            if (Mathf.Abs(roundedSpeed) > 0.0f)
-            {
-                speed += snapForce / roundedSpeed * Time.deltaTime;
-            }
-            else
-            {
-                speed *= 1 / snapForce;
-            }
-            speed *= speedDampening;
-            speed *= 100.0f;
-            speed = Mathf.Round(speed);
-            speed /= 100.0f;*/
 		}
 
-		if (wheelRotation > 360)
+
+		if (wheelRotation > 720)
 		{
 			wheelRotation -= 360;
-		} else if (wheelRotation < 0)
+		} else if (wheelRotation < 360)
 		{
 			wheelRotation += 360;
 		}
-		Debug.Log(wheelRotation);
+		//Debug.Log(wheelRotation);
 	}
 
 
@@ -174,17 +151,25 @@ public class WheelManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 lastTouchPos = Input.mousePosition;
-            }
+				startTouchPos = Input.mousePosition;
+				touchHolding = RaycastToCenterBox(Input.mousePosition);
+				
+			}
             else
             {
                 userSpeed = (Input.mousePosition.y - lastTouchPos.y) / Screen.height;
-                lastTouchPos = Input.mousePosition;
+				lastUserDirectionPositive = lastTouchPos.y > Input.mousePosition.y;
+				lastTouchPos = Input.mousePosition;
+				HoldTouchPosition(Input.mousePosition);
+				
             }
         }
         else
         {
             userSpeed = 0;
-        }
+			touchHolding = false;
+			centerBox?.EndWiggle();
+		}
 #elif UNITY_ANDROID
 
         if (Input.touchCount == 1)
@@ -192,10 +177,12 @@ public class WheelManager : MonoBehaviour
 			if (Input.GetTouch(0).phase == TouchPhase.Began)
 			{
 				lastTouchPos = Input.GetTouch(0).position;
+				startTouchPos = Input.GetTouch(0).position;
 			} else
 			{
 				userSpeed = (Input.GetTouch(0).position.y - lastTouchPos.y) / Screen.height;
 				lastTouchPos = Input.GetTouch(0).position;
+				HoldTouchPosition(Input.GetTouch(0).position);
 			}
 		} else
 		{
@@ -204,4 +191,57 @@ public class WheelManager : MonoBehaviour
 #endif
     }
 
+	private void HoldTouchPosition (Vector2 screenPos)
+	{
+		if (touchHolding && Vector2.Distance(screenPos, startTouchPos) < 5)
+		{
+			Debug.Log("Holding");
+			centerBox.WiggleWhenSelecting((Time.time - HoldingStartTime) / holdToSelectTime);
+			if (HoldingStartTime + holdToSelectTime < Time.time)
+			{
+				Debug.Log("Selected");
+				BoxSelected();
+				touchHolding = false;
+			}
+		} else
+		{
+			touchHolding = false;
+			centerBox?.EndWiggle();
+		}
+	}
+
+	private bool RaycastToCenterBox (Vector2 screenPos)
+	{
+		Ray ray = cam.ScreenPointToRay(screenPos);
+		RaycastHit hit;
+		if (Physics.Raycast(ray, out hit))
+		{
+			centerBox = null;
+			float lowestValue = float.MaxValue;
+			foreach (var box in boxes)
+			{
+				if (Mathf.Abs(box.transform.position.y) < lowestValue)
+				{
+					centerBox = box.GetComponent<WheelObject>();
+					lowestValue = Mathf.Abs(box.transform.position.y);
+				}
+			}
+			if (hit.transform.parent.gameObject == centerBox.gameObject)
+			{
+				Debug.Log("hit");
+				HoldingStartTime = Time.time;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void BoxSelected ()
+	{
+		companyState = !companyState;
+		foreach (var box in boxes)
+		{
+			box.GetComponent<WheelObject>().StateChanged(companyState);
+		}
+	}
 }

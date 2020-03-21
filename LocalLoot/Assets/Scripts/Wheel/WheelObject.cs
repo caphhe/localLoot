@@ -9,6 +9,8 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private AnimationCurve flipCurve = null;
 	[SerializeField] private TextMeshPro companyNameText;
 	[SerializeField] private TextMeshPro voucherNameText;
+	[SerializeField] private AnimationCurve wiggleWhenSelectingCurve = null;
+	[SerializeField] private float wiggleAngle = 10f;
 
 	private Material mat; 
 	private bool companyState = true;
@@ -26,11 +28,7 @@ public class WheelObject : MonoBehaviour
 		{
 			if (companyState)
 			{
-				transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-			}
-			if (Input.GetKeyDown(KeyCode.Space))
-			{
-				StateChanged(!companyState);
+				transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
 			}
 		} else
 		{
@@ -78,5 +76,15 @@ public class WheelObject : MonoBehaviour
 	public static float LerpOvershoot(float a, float b, float t)
 	{
 		return t * b + (1 - t) * a;
+	}
+
+	public void WiggleWhenSelecting (float t)
+	{
+		transform.rotation = Quaternion.Euler(0, 0, wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle);
+	}
+
+	public void EndWiggle()
+	{
+		transform.rotation = Quaternion.Euler(0, 0, 0);
 	}
 }

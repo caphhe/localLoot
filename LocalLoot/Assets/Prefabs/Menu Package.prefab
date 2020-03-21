@@ -372,7 +372,7 @@ BoxCollider:
   m_GameObject: {fileID: 2551502428075261797}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -456,3 +456,57 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  companyNameText: {fileID: 0}
+  voucherNameText: {fileID: 0}
+  wiggleWhenSelectingCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0013573766
+      value: 0
+      inSlope: 4.2828245
+      outSlope: 4.2828245
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.20786357
+      value: 0.88442975
+      inSlope: -0.025187928
+      outSlope: -0.025187928
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.22862038
+    - serializedVersion: 3
+      time: 0.45074686
+      value: -0.9673091
+      inSlope: -1.0292284
+      outSlope: -1.0292284
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.79678625
+      value: 0.9585833
+      inSlope: -0.046500824
+      outSlope: -0.046500824
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.16946135
+    - serializedVersion: 3
+      time: 1.0014184
+      value: 0
+      inSlope: -4.684423
+      outSlope: -4.684423
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  wiggleAngle: 5
