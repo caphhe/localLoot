@@ -150,6 +150,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1341ba63250685a4e81c6b37090b71e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxPrefab: {fileID: 7130660653953482221, guid: 35b95750b59ddb54f9262d3ad8beaf54,
+    type: 3}
+  visibleBoxes: 5
+  distanceInDegrees: 20
+  radius: 10
+  speed: 0.1
 --- !u!4 &548409458
 Transform:
   m_ObjectHideFlags: 0
@@ -158,7 +164,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 548409456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 616846272}
@@ -417,6 +423,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Menu Package
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130660653953482221, guid: 35b95750b59ddb54f9262d3ad8beaf54,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35b95750b59ddb54f9262d3ad8beaf54, type: 3}
