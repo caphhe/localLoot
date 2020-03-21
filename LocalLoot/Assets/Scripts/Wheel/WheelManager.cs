@@ -21,13 +21,16 @@ public class WheelManager : MonoBehaviour
     [SerializeField] private float speedDampening = 0.9f;
 	[SerializeField] private float userSpeedMod = 0.25f;
 	[SerializeField] private float snapForce = 1f;
+	[SerializeField] private AnimationCurve snapForceCurve = null;
 
     WheelState state;
 
 	[SerializeField] private float speed = 1f;
 	private float userSpeed = 0;
 	private List<GameObject> boxes = new List<GameObject>();
-	private Rigidbody rb; 
+	private Rigidbody rb;
+
+	private float wheelRotation = 0;
 
 	private Vector2 lastTouchPos = new Vector2 (-1, -1);
 	
@@ -49,11 +52,12 @@ public class WheelManager : MonoBehaviour
 		Touchinput();
 		CalcSpeed ();
 		//rb.AddTorque(new Vector3(userSpeed *100, 0, 0), ForceMode.Acceleration);
-		gameObject.transform.Rotate(Vector3.right, speed * Time.deltaTime);
-		//if (Mathf.Abs(transform.rotation.eulerAngles.x % distanceInDegrees) < Mathf.Abs(speed))
-		//{
-		//	SwapBoxPosition(speed > 0);
-		//}
+		//gameObject.transform.Rotate(Vector3.right, speed * Time.deltaTime);
+		gameObject.transform.rotation = Quaternion.Euler(wheelRotation, 0, 0);
+		if (Mathf.Abs(wheelRotation % distanceInDegrees) < Mathf.Abs(speed))
+		{
+			SwapBoxPosition(speed > 0);
+		}
     }
 
 	private void AddBox ()
@@ -89,23 +93,48 @@ public class WheelManager : MonoBehaviour
 
 	private void CalcSpeed ()
 	{
+		float distanceToRest = (wheelRotation - distanceInDegrees/2) % distanceInDegrees - distanceInDegrees / 2;
+		float distanceToRestPercent = distanceToRest / (distanceInDegrees / 2);
+		Debug.Log("distance to rest: " + distanceToRest + " | " + distanceToRestPercent);
 		if (Input.GetMouseButton(0))
 		{
 			speed = userSpeed * userSpeedMod;
+			wheelRotation += speed;
+			
+			
 		}
-            else
+        else
 		{
-            //         float angleSegment = (transform.rotation.eulerAngles.x - distanceInDegrees / 2);
-            //         float modAngles =  angleSegment % distanceInDegrees;
-            //         Debug.Log(modAngles);
-            //         float distFromRestPos = modAngles - distanceInDegrees / 2;
-            //float distFromRestPercent = distFromRestPos / (distanceInDegrees / 2);
-
-            //speed += distFromRestPercent * snapForce; 
-
-            //speed *= speedDampening;
 
 
+
+
+			speed += (distanceToRestPercent) * snapForce * -1;
+
+
+			//if (speed > 0.1f)
+			//{
+				speed *= speedDampening;
+			//}
+			//else
+			//{
+			//	speed *= speedDampening + (speed -0.1f);
+			//}
+			wheelRotation += speed;
+
+
+
+			//         float angleSegment = (transform.rotation.eulerAngles.x - distanceInDegrees / 2);
+			//         float modAngles =  angleSegment % distanceInDegrees;
+			//         Debug.Log(modAngles);
+			//         float distFromRestPos = modAngles - distanceInDegrees / 2;
+			//float distFromRestPercent = distFromRestPos / (distanceInDegrees / 2);
+
+			//speed += distFromRestPercent * snapForce; 
+
+			//speed *= speedDampening;
+
+			/*
 
             float angleSegment = (Mathf.Deg2Rad * (transform.rotation.eulerAngles.x - (distanceInDegrees / 2.0f))) % distanceRad;
             float sinDist = Mathf.Sin(transform.rotation.x * Mathf.Deg2Rad) - Mathf.Sin(angleSegment);
@@ -123,8 +152,17 @@ public class WheelManager : MonoBehaviour
             speed *= speedDampening;
             speed *= 100.0f;
             speed = Mathf.Round(speed);
-            speed /= 100.0f;
-        }
+            speed /= 100.0f;*/
+		}
+
+		if (wheelRotation > 360)
+		{
+			wheelRotation -= 360;
+		} else if (wheelRotation < 0)
+		{
+			wheelRotation += 360;
+		}
+		Debug.Log(wheelRotation);
 	}
 
 
