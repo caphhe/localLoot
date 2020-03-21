@@ -157,8 +157,8 @@ MonoBehaviour:
   distanceInDegrees: 20
   radius: 10
   speedDampening: 0.99
-  userSpeedMod: 25
-  snapForce: 0.02
+  userSpeedMod: 4000
+  snapForce: 1000
   speed: 0
 --- !u!4 &548409458
 Transform:
