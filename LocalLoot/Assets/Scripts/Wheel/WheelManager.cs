@@ -30,7 +30,9 @@ public class WheelManager : MonoBehaviour
 		{
 			AddBox();
 		}
-    }
+
+		rb.centerOfMass = gameObject.transform.position;
+	}
 
     // Update is called once per frame
     void Update()
@@ -38,7 +40,7 @@ public class WheelManager : MonoBehaviour
 		Touchinput();
 		CalcSpeed();
 		//rb.AddTorque(new Vector3(userSpeed *100, 0, 0), ForceMode.Acceleration);
-		gameObject.transform.Rotate(Vector3.right, speed);
+		gameObject.transform.Rotate(Vector3.right, speed );
 		if (Mathf.Abs(transform.rotation.eulerAngles.x % distanceInDegrees) < Mathf.Abs(speed))
 		{
 			SwapBoxPosition(speed > 0);
@@ -50,6 +52,7 @@ public class WheelManager : MonoBehaviour
 		var box = Instantiate(boxPrefab, transform);
 		boxes.Add(box);
 		box.transform.position = GetPostitonForBox(boxes.Count - 1);
+		box.GetComponent<WheelObject>().ReSkin();
 	}
 
 	private void SwapBoxPosition (bool topToBottom)
@@ -68,6 +71,7 @@ public class WheelManager : MonoBehaviour
 			boxes.Add(movedBox);
 			movedBox.transform.position = GetPostitonForBox(boxes.Count - 1);
 		}
+		movedBox.GetComponent<WheelObject>().ReSkin();
 	} 
 
 	private Vector3 GetPostitonForBox (int index)
@@ -83,11 +87,11 @@ public class WheelManager : MonoBehaviour
 			speed = userSpeed * userSpeedMod;
 		} else
 		{
-			
+			Debug.Log(transform.rotation.eulerAngles.x);
 			float distFromRestPos = (transform.rotation.eulerAngles.x - distanceInDegrees/2) % distanceInDegrees - distanceInDegrees / 2;
 			float distFromRestPercent = distFromRestPos / (distanceInDegrees / 2);
 
-			speed += distFromRestPercent * snapForce; 
+			speed += distFromRestPercent * snapForce * Time.deltaTime; 
 
 			speed *= speedDampening;
 
