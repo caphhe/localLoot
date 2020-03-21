@@ -7,6 +7,7 @@ public class CompanyScriptable : ScriptableObject
 {
 	public string companyName;
 	public Texture companyLogo;
+	public Color companyColor;
 	public List<Voucher> vouchers;
 }
 

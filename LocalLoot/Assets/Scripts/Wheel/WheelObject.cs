@@ -7,14 +7,18 @@ public class WheelObject : MonoBehaviour
 {
 	[SerializeField] private float stateChangeTime = 1f;
 	[SerializeField] private AnimationCurve flipCurve = null;
-	[SerializeField] private TextMeshPro companyNameText;
-	[SerializeField] private TextMeshPro voucherNameText;
+	[SerializeField] private TextMeshPro companyNameText = null;
+	[SerializeField] private TextMeshPro voucherNameText = null;
+	[SerializeField] private GameObject companyLogoObj = null;
+	[SerializeField] private GameObject boxObj = null;
 	[SerializeField] private AnimationCurve wiggleWhenSelectingCurve = null;
 	[SerializeField] private float wiggleAngle = 10f;
 
-	private Material mat; 
 	private bool companyState = true;
 	private float stateTransitionTimer = 1;
+
+	private CompanyScriptable _company;
+	public CompanyScriptable company { get { return _company; } }
 	
 	// Start is called before the first frame update
     void Start()
@@ -50,12 +54,23 @@ public class WheelObject : MonoBehaviour
 		
     }
 
-	public void ReSkin ()
+	public void ReSkinCompany (CompanyScriptable company)
 	{
-		mat = transform.GetChild(0).GetComponent<Renderer>().material;
-		mat.color = new Color(Random.value, Random.value, Random.value);
-
+		this._company = company;
+		Material boxMat = boxObj.GetComponent<Renderer>().material;
+		boxMat.SetColor("_BaseColor", company.companyColor);
+		Material companyLogoMat = companyLogoObj.GetComponent<Renderer>().material;
+		companyLogoMat.SetTexture("_BaseMap", company.companyLogo);
+		companyNameText.text = company.companyName;
 	
+	}
+
+	public void ReSkinVoucher (CompanyScriptable company, int voucherID)
+	{
+		this._company = company;
+		Material boxMat = boxObj.GetComponent<Renderer>().material;
+		boxMat.SetColor("_BaseColor", company.companyColor);
+		voucherNameText.text = company.vouchers[voucherID].name;
 	}
 
 	public void StateChanged (bool companyState)

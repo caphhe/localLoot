@@ -26,6 +26,7 @@ public class WheelManager : MonoBehaviour
 	[SerializeField] private AnimationCurve dampeningBelow1Curve = null;
 	[SerializeField] private Camera cam;
 	[SerializeField] private float holdToSelectTime = 1f;
+	[SerializeField] private DataManager dataManager;
 
 	WheelState state;
 
@@ -44,11 +45,12 @@ public class WheelManager : MonoBehaviour
 	private WheelObject centerBox;
 
 	private bool companyState = true;
-	
-	
-	
+	private int lowestVisibleIndex = 0;
+	private int highestVisibleIndex = 0;
+
+
 	// Start is called before the first frame update
-    void Start()
+	void Start()
     {
 		for (int i = 0; i < visibleBoxes; i++)
 		{
@@ -77,7 +79,8 @@ public class WheelManager : MonoBehaviour
 		var box = Instantiate(boxPrefab, transform);
 		boxes.Add(box);
 		box.transform.position = GetPostitonForBox(boxes.Count - 1, true);
-		box.GetComponent<WheelObject>().ReSkin();
+
+		ReskinToHighestIndex(box.GetComponent<WheelObject>());
 	}
 
 	private void SwapBoxPosition (bool topToBottom)
@@ -89,15 +92,66 @@ public class WheelManager : MonoBehaviour
 			boxes.RemoveAt(boxes.Count - 1);
 			boxes.Insert(0, movedBox);
 			movedBox.transform.position = GetPostitonForBox(0, false);
+			ReskinToLowestIndex(movedBox.GetComponent<WheelObject>());
+
 		} else
 		{
 			movedBox = boxes[0];
 			boxes.RemoveAt(0);
 			boxes.Add(movedBox);
 			movedBox.transform.position = GetPostitonForBox(boxes.Count - 1, false);
+			ReskinToHighestIndex(movedBox.GetComponent<WheelObject>());
 		}
-		movedBox.GetComponent<WheelObject>().ReSkin();
 	} 
+
+	private void ReskinToHighestIndex (WheelObject obj)
+	{
+		int max = dataManager.companies.Length;
+		if (!companyState)
+		{
+			max = dataManager.selectedCompany.vouchers.Count;
+		}
+
+		highestVisibleIndex++;
+
+		if (highestVisibleIndex >= max)
+		{
+			highestVisibleIndex = 0;
+		}
+
+		if (companyState)
+		{
+			obj.ReSkinCompany(dataManager.companies[highestVisibleIndex]);
+		}
+		else
+		{
+			obj.ReSkinVoucher(dataManager.selectedCompany, highestVisibleIndex);
+		}
+	}
+
+	private void ReskinToLowestIndex(WheelObject obj)
+	{
+		int max = dataManager.companies.Length - 1;
+		if (!companyState)
+		{
+			max = dataManager.selectedCompany.vouchers.Count - 1;
+		}
+
+		lowestVisibleIndex--;
+		if (lowestVisibleIndex < 0)
+		{
+			lowestVisibleIndex = max;
+		}
+
+		if (companyState)
+		{
+			obj.ReSkinCompany(dataManager.companies[lowestVisibleIndex]);
+		}
+		else
+		{
+			obj.ReSkinVoucher(dataManager.selectedCompany, lowestVisibleIndex);
+		}
+	}
 
 	private Vector3 GetPostitonForBox (int index, bool firstSpawn)
 	{
@@ -239,9 +293,13 @@ public class WheelManager : MonoBehaviour
 	private void BoxSelected ()
 	{
 		companyState = !companyState;
+		dataManager.SetSelectedCompany (centerBox.company);
+		highestVisibleIndex = 0;
 		foreach (var box in boxes)
 		{
 			box.GetComponent<WheelObject>().StateChanged(companyState);
+			
+			ReskinToHighestIndex(box.GetComponent<WheelObject>());
 		}
 	}
 }
