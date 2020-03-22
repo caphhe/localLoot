@@ -8,7 +8,10 @@ public class DataManager : MonoBehaviour
 	public CompanyScriptable[] companies { get { return _companies; } }
 
 	public CompanyScriptable _selectedCompany;
-		public CompanyScriptable selectedCompany { get { return _selectedCompany; } }
+	public CompanyScriptable selectedCompany { get { return _selectedCompany; } }
+
+	public int _selectedVoucher;
+	public int selectedVoucher { get { return _selectedVoucher; } }
 
 	// Start is called before the first frame update
 	void Awake()
@@ -30,5 +33,10 @@ public class DataManager : MonoBehaviour
 	public void SetSelectedCompany (CompanyScriptable selected)
 	{
 		_selectedCompany = selected;
+	}
+
+	public void SetSelectedVoucher(int selected)
+	{
+		_selectedVoucher = selected;
 	}
 }

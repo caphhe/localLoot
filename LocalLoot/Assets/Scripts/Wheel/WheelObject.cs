@@ -24,9 +24,12 @@ public class WheelObject : MonoBehaviour
 
 	private CompanyScriptable _company;
 	public CompanyScriptable company { get { return _company; } }
-	
+
+	private int _voucherID;
+	public int voucherID { get { return _voucherID; } }
+
 	// Start is called before the first frame update
-    void Start()
+	void Start()
     {
 		//DropBox();
     }
@@ -84,6 +87,7 @@ public class WheelObject : MonoBehaviour
 	public void ReSkinVoucher (CompanyScriptable company, int voucherID)
 	{
 		this._company = company;
+		this._voucherID = voucherID;
 		Material boxMat = boxObj.GetComponent<Renderer>().material;
 		boxMat.SetColor("_BaseColor", company.companyColor);
 		voucherNameText.text = company.vouchers[voucherID].name;

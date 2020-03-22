@@ -323,6 +323,7 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 		{
 			sceneAnimator?.SetBool("CouponSelected", true);
 			centerBox?.DropBoxWhenSelected();
+			dataManager.SetSelectedVoucher(centerBox.voucherID);
 			RemoveAllBoxes();
 
 		}
