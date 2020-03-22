@@ -10,6 +10,7 @@ public class Coupon : MonoBehaviour, ISceneUpdatable
 	[SerializeField] private GameObject couponLogoObj = null;
 	[SerializeField] private bool isSelectedCoupon = false;
 	[SerializeField] private Vector2 shardRange = new Vector2(10, 20);
+	[SerializeField] private GameObject trailObj = null;
 
 	[SerializeField] private DataManager dataManager;
 
@@ -45,6 +46,7 @@ public class Coupon : MonoBehaviour, ISceneUpdatable
 			shardText.gameObject.SetActive(false);
 			couponNameText.gameObject.SetActive(true);
 			couponLogoObj.SetActive(true);
+			trailObj.SetActive(true);
 		}
 		else
 		{
@@ -52,6 +54,7 @@ public class Coupon : MonoBehaviour, ISceneUpdatable
 			couponLogoObj.SetActive(false);
 			shardText.gameObject.SetActive(true);
 			couponNameText.gameObject.SetActive(false);
+			trailObj.SetActive(true);
 		}
 	}
 }

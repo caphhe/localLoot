@@ -660,6 +660,7 @@ MonoBehaviour:
   couponLogoObj: {fileID: 1576737834027178697}
   isSelectedCoupon: 1
   shardRange: {x: 10, y: 20}
+  trailObj: {fileID: 7413304987674381305}
   dataManager: {fileID: 0}
   _targetStateNames:
   - OpeningLootbox
@@ -679,7 +680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2043740557581749024
 Transform:
   m_ObjectHideFlags: 0
