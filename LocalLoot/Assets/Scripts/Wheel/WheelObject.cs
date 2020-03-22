@@ -157,6 +157,6 @@ public class WheelObject : MonoBehaviour
 	{
         LootboxAnchorController ac = FindObjectOfType<LootboxAnchorController>();
         var rb = ac.gameObject.AddComponent<Rigidbody>();
-        rb.AddTorque(dropTorque);
+        //rb.AddTorque(dropTorque);
     }
 }
