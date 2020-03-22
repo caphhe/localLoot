@@ -2,18 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
-public class WheelManager : MonoBehaviour
-{
-    public enum WheelState
-    {
-        Idle,
-        Spinning,
-        Interacted,
-        ReachingDestination,
-
-    }
-    
+public class WheelManager : MonoBehaviour, ISceneUpdatable
+{    
 	[SerializeField] private GameObject boxPrefab = null;
 	[SerializeField] private int visibleBoxes = 5;
 	[SerializeField] private float distanceInDegrees = 5f;
@@ -27,8 +19,7 @@ public class WheelManager : MonoBehaviour
 	[SerializeField] private Camera cam;
 	[SerializeField] private float holdToSelectTime = 1f;
 	[SerializeField] private DataManager dataManager;
-
-	WheelState state;
+	[SerializeField] private Animator sceneAnimator = null;
 
 	[SerializeField] private float speed = 1f;
 	private float userSpeed = 0;
@@ -47,21 +38,33 @@ public class WheelManager : MonoBehaviour
 	private bool companyState = true;
 	private int lowestVisibleIndex = 0;
 	private int highestVisibleIndex = 0;
+	private bool stopUpdate = false;
+
+	public List<string> targetStateNames => _targetStateNames;
+	[SerializeField] List<string> _targetStateNames;
 
 
-	// Start is called before the first frame update
-	void Start()
-    {
-		for (int i = 0; i < visibleBoxes; i++)
+
+	public void OnInit(string stateName)
+	{
+		if (stateName == "StoreSelected")
 		{
-			AddBox();
+			CleanUp();
+			for (int i = 0; i < visibleBoxes; i++)
+			{
+				AddBox();
+			}
 		}
 
     }
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	public void OnUpdate()
     {
+		if (stopUpdate)
+		{
+			return;
+		}
 		Touchinput();
 		CalcSpeed ();
 		gameObject.transform.rotation = Quaternion.Euler(wheelRotation, 0, 0);
@@ -73,6 +76,11 @@ public class WheelManager : MonoBehaviour
 		}
 
     }
+
+	public void OnEnter()
+	{
+
+	}
 
 	private void AddBox ()
 	{
@@ -220,9 +228,12 @@ public class WheelManager : MonoBehaviour
         }
         else
         {
-            userSpeed = 0;
-			touchHolding = false;
-			centerBox?.EndWiggle();
+			if (touchHolding)
+			{
+				touchHolding = false;
+				centerBox?.EndWiggle();
+			}
+			userSpeed = 0;
 		}
 #elif UNITY_ANDROID
 
@@ -292,14 +303,54 @@ public class WheelManager : MonoBehaviour
 
 	private void BoxSelected ()
 	{
-		companyState = !companyState;
-		dataManager.SetSelectedCompany (centerBox.company);
-		highestVisibleIndex = 0;
+		if (companyState) {
+			companyState = !companyState;
+			dataManager.SetSelectedCompany(centerBox.company);
+			highestVisibleIndex = 0;
+			foreach (var box in boxes)
+			{
+				box.GetComponent<WheelObject>().StateChanged(companyState);
+
+				ReskinToHighestIndex(box.GetComponent<WheelObject>());
+			}
+			//sceneAnimator?.SetBool("StoreSelected", true);
+		} else
+		{
+			//sceneAnimator?.SetBool("CouponSelected", true);
+			RemoveAllBoxes();
+		}
+
+		// Scene Manager Advance
+		
+	}
+
+	private void RemoveAllBoxes ()
+	{
 		foreach (var box in boxes)
 		{
-			box.GetComponent<WheelObject>().StateChanged(companyState);
-			
-			ReskinToHighestIndex(box.GetComponent<WheelObject>());
+			if (box == centerBox.gameObject)
+			{
+				continue;
+			}
+			box.GetComponent<WheelObject>().RemoveBox();
 		}
+		boxes = new List<GameObject>();
+		stopUpdate = true;
+	}
+
+	private void CleanUp()
+	{
+		for (int i = transform.childCount - 1; i >= 0; i--)
+		{
+			Destroy(transform.GetChild(i).gameObject);
+		}
+		boxes = new List<GameObject>();
+		stopUpdate = false;
+		companyState = true;
+		lowestVisibleIndex = 0;
+		highestVisibleIndex = 0;
+		touchHolding = false;
+		wheelRotation = 360;
+		speed = 0;
 	}
 }

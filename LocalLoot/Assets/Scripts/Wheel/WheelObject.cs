@@ -14,9 +14,12 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private GameObject boxObj = null;
 	[SerializeField] private AnimationCurve wiggleWhenSelectingCurve = null;
 	[SerializeField] private float wiggleAngle = 10f;
+	[SerializeField] private AnimationCurve removeScaleCurve = null;
+	[SerializeField] private float removeTimer;
 
 	private bool companyState = true;
 	private float stateTransitionTimer = 1;
+	private float removeT = -1;
 
 	private CompanyScriptable _company;
 	public CompanyScriptable company { get { return _company; } }
@@ -52,7 +55,12 @@ public class WheelObject : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0, angle, 0);
 		}
 
-		
+		if (removeT != -1)
+		{
+			removeT += Time.deltaTime;
+			float scale = removeScaleCurve.Evaluate(removeT / removeTimer);
+			transform.localScale = new Vector3(scale, scale, scale);
+		}
     }
 
 	public void ReSkinCompany (CompanyScriptable company)
@@ -119,5 +127,11 @@ public class WheelObject : MonoBehaviour
 	public void EndWiggle()
 	{
 		transform.rotation = Quaternion.Euler(0, 0, 0);
+	}
+
+	public void RemoveBox()
+	{
+		Destroy(gameObject, removeTimer);
+		removeT = 0;
 	}
 }
