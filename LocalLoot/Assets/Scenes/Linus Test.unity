@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.3301887, g: 0.3030499, b: 0.24764152, a: 1}
-  m_AmbientEquatorColor: {r: 0.18596475, g: 0.19647859, b: 0.1981132, a: 1}
-  m_AmbientGroundColor: {r: 0.2830189, g: 0.2060342, b: 0.052064802, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientSkyColor: {r: 0.5660378, g: 0.47982526, b: 0.41918835, a: 1}
+  m_AmbientEquatorColor: {r: 0.20518869, g: 0.4262972, b: 0.5, a: 1}
+  m_AmbientGroundColor: {r: 0.2376459, g: 0.16398183, b: 0.5188679, a: 1}
+  m_AmbientIntensity: 0.95
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ad302da6e38e7c542af0189dc81cd3cd, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 4ae8d59078ee22d40b699d33f5dd1cdb, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -35,10 +35,10 @@ RenderSettings:
   m_DefaultReflectionMode: 0
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
-  m_ReflectionIntensity: 1
+  m_ReflectionIntensity: 0.172
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 471850495}
-  m_IndirectSpecularColor: {r: 0.25425792, g: 0.39830664, b: 0.55412716, a: 1}
+  m_IndirectSpecularColor: {r: 0.15474126, g: 0.27606866, b: 0.32942936, a: 0.172}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 565515202}
   m_LocalRotation: {x: -0, y: -0.6465289, z: -0, w: 0.76288944}
-  m_LocalPosition: {x: 11.59, y: 2.31, z: -1.84}
+  m_LocalPosition: {x: 15.3, y: 3.5, z: -2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -320,6 +320,26 @@ PrefabInstance:
     - target: {fileID: 541917789948342855, guid: e2eca98c03079cc49a93e60dc86388bd,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541917790002655510, guid: e2eca98c03079cc49a93e60dc86388bd,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541917790002655510, guid: e2eca98c03079cc49a93e60dc86388bd,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.y
+      value: 2.3510647e-38
+      objectReference: {fileID: 0}
+    - target: {fileID: 541917790002655510, guid: e2eca98c03079cc49a93e60dc86388bd,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 541917790002655510, guid: e2eca98c03079cc49a93e60dc86388bd,
+        type: 3}
+      propertyPath: m_BoundingSphereOverride.w
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -529,6 +549,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PostProcessingVolume
       objectReference: {fileID: 0}
+    - target: {fileID: 5934645412002450681, guid: 6e6a215eddac77c42ad74ca97a9a4b32,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e6a215eddac77c42ad74ca97a9a4b32, type: 3}
 --- !u!1001 &6493192606547914556
@@ -667,6 +692,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6714441054050561897, guid: 14c994a3f7db73047b1965a957104364,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 984e24a85f271894d9c6be23864c14c1, type: 2}
     - target: {fileID: 7195801676736087600, guid: 14c994a3f7db73047b1965a957104364,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -736,6 +766,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2100386848313511973, guid: d6bcc1d85c39d0f429926590b28a856e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 169ff7b15fbf784448385b308cf0d27b, type: 2}
     - target: {fileID: 7525902884894335942, guid: d6bcc1d85c39d0f429926590b28a856e,
         type: 3}
       propertyPath: m_Name
