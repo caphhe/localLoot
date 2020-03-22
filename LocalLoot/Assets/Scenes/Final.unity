@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 3.91, y: 3.11, z: 0.21}
+  m_FollowOffset: {x: 5.24, y: 3.06, z: 0.59}
   m_XDamping: 1
   m_YDamping: 2
   m_ZDamping: 1
@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: -1.37, y: 0.93, z: 0}
+  m_TrackedObjectOffset: {x: -1.37, y: 1.9, z: 0}
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 10
   m_LookaheadIgnoreY: 0
@@ -469,7 +469,7 @@ MonoBehaviour:
     LensShift: {x: 0, y: 0}
   m_Transitions:
     m_BlendHint: 1
-    m_InheritPosition: 1
+    m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -583,7 +583,7 @@ MonoBehaviour:
     LensShift: {x: 0, y: 0}
   m_Transitions:
     m_BlendHint: 1
-    m_InheritPosition: 1
+    m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -596,8 +596,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678213586}
-  m_LocalRotation: {x: 0.13469864, y: -0.707266, z: 0.14016248, w: 0.6796953}
-  m_LocalPosition: {x: 3.91, y: 11.11, z: 0.21}
+  m_LocalRotation: {x: 0.05832601, y: -0.73511, z: 0.06376403, w: 0.67241764}
+  m_LocalPosition: {x: 5.24, y: 11.059999, z: 0.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 63774264}
@@ -1033,7 +1033,7 @@ MonoBehaviour:
     LensShift: {x: 0, y: 0}
   m_Transitions:
     m_BlendHint: 0
-    m_InheritPosition: 1
+    m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
         m_Calls: []
@@ -1367,6 +1367,7 @@ GameObject:
   - component: {fileID: 1748264475}
   - component: {fileID: 1748264478}
   - component: {fileID: 1748264476}
+  - component: {fileID: 1748264477}
   m_Layer: 0
   m_Name: LootBoxAnchor
   m_TagString: Untagged
@@ -1399,6 +1400,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 663d21bb52da99e4386345eef70c70dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1748264477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748264474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d0f93f0816675a49a7f83bd1a8ce8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1748264478
@@ -1604,9 +1617,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1510078188660311783, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673379370462233147, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4928928586980552011, guid: dbc58192a62ba2c478d551975aa94840,
         type: 3}
       propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285521467542741327, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5652993865427673098, guid: dbc58192a62ba2c478d551975aa94840,
@@ -1743,9 +1771,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1510078188660311783, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2673379370462233147, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4928928586980552011, guid: dbc58192a62ba2c478d551975aa94840,
         type: 3}
       propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285521467542741327, guid: dbc58192a62ba2c478d551975aa94840,
+        type: 3}
+      propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5652993865427673098, guid: dbc58192a62ba2c478d551975aa94840,
