@@ -15,7 +15,8 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private AnimationCurve wiggleWhenSelectingCurve = null;
 	[SerializeField] private float wiggleAngle = 10f;
 	[SerializeField] private AnimationCurve removeScaleCurve = null;
-	[SerializeField] private float removeTimer;
+	[SerializeField] private float removeTimer = 1f;
+	[SerializeField] private Vector3 dropTorque = new Vector3(0,0,0);
 
 	private bool companyState = true;
 	private float stateTransitionTimer = 1;
@@ -27,6 +28,7 @@ public class WheelObject : MonoBehaviour
 	// Start is called before the first frame update
     void Start()
     {
+		//DropBox();
     }
 
     // Update is called once per frame
@@ -120,12 +122,14 @@ public class WheelObject : MonoBehaviour
 			transform.rotation = Quaternion.Euler(0, 0, wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle);
 		} else
 		{
-			transform.rotation = Quaternion.Euler(wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle, 0, 0);
+			Debug.Log("Voucher wiggle");
+			transform.rotation = Quaternion.Euler(wiggleWhenSelectingCurve.Evaluate(t) * wiggleAngle, 90, 0);
 		}
 	}
 
 	public void EndWiggle()
 	{
+		Debug.Log("Endwiggle");
 		transform.rotation = Quaternion.Euler(0, 0, 0);
 	}
 
@@ -133,5 +137,17 @@ public class WheelObject : MonoBehaviour
 	{
 		Destroy(gameObject, removeTimer);
 		removeT = 0;
+	}
+
+	public void DropBoxWhenSelected ()
+	{
+		Debug.Log("Drop");
+		Invoke("DropBox", removeTimer);
+	}
+
+	private void DropBox()
+	{
+		var rb = gameObject.AddComponent<Rigidbody>();
+		rb.AddTorque(dropTorque);
 	}
 }

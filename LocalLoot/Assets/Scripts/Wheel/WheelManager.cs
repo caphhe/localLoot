@@ -61,7 +61,6 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 	// Update is called once per frame
 	public void OnUpdate()
     {
-		Debug.Log("test");
 		if (stopUpdate)
 		{
 			return;
@@ -232,7 +231,7 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 			if (touchHolding)
 			{
 				touchHolding = false;
-				centerBox?.EndWiggle();
+				//centerBox?.EndWiggle();
 			}
 			userSpeed = 0;
 		}
@@ -271,8 +270,11 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 			}
 		} else
 		{
+			if (touchHolding)
+			{
+				centerBox?.EndWiggle();
+			}
 			touchHolding = false;
-			centerBox?.EndWiggle();
 		}
 	}
 
@@ -280,16 +282,18 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 	{
 		Ray ray = cam.ScreenPointToRay(screenPos);
 		RaycastHit hit;
+		Debug.Log("Raycast");
 		if (Physics.Raycast(ray, out hit))
 		{
 			centerBox = null;
 			float lowestValue = float.MaxValue;
+			Debug.Log(hit.transform.gameObject.name);
 			foreach (var box in boxes)
 			{
-				if (Mathf.Abs(box.transform.position.y) < lowestValue)
+				if (Mathf.Abs(box.transform.position.y - gameObject.transform.position.y) < lowestValue)
 				{
 					centerBox = box.GetComponent<WheelObject>();
-					lowestValue = Mathf.Abs(box.transform.position.y);
+					lowestValue = Mathf.Abs(box.transform.position.y - gameObject.transform.position.y);
 				}
 			}
 			if (hit.transform.parent.gameObject == centerBox.gameObject)
@@ -314,14 +318,14 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 
 				ReskinToHighestIndex(box.GetComponent<WheelObject>());
 			}
-			//sceneAnimator?.SetBool("StoreSelected", true);
+			sceneAnimator?.SetBool("StoreSelected", true);
 		} else
 		{
-			//sceneAnimator?.SetBool("CouponSelected", true);
+			sceneAnimator?.SetBool("CouponSelected", true);
+			centerBox?.DropBoxWhenSelected();
 			RemoveAllBoxes();
-		}
 
-		// Scene Manager Advance
+		}
 		
 	}
 
@@ -353,5 +357,10 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 		touchHolding = false;
 		wheelRotation = 360;
 		speed = 0;
+	}
+
+	private void GoBackToCompany ()
+	{
+		OnInit("SelectingStore");
 	}
 }
