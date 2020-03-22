@@ -150,8 +150,11 @@ public class WheelObject : MonoBehaviour
 	}
 
 	private void DropBox()
-	{
-		var rb = gameObject.AddComponent<Rigidbody>();
-		rb.AddTorque(dropTorque);
-	}
+	{		
+        LootboxAnchorController ac = FindObjectOfType<LootboxAnchorController>();
+        ac.transform.position = transform.position;
+        transform.SetParent(FindObjectOfType<LootBoxAnchorTarget>().transform, true);
+        var rb = ac.gameObject.AddComponent<Rigidbody>();
+        rb.AddTorque(dropTorque);
+    }
 }
