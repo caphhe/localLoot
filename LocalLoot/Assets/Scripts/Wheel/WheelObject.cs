@@ -17,7 +17,7 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private AnimationCurve removeScaleCurve = null;
 	[SerializeField] private float removeTimer = 1f;
 	[SerializeField] private Vector3 dropTorque = new Vector3(0,0,0);
-	[SerializeField] private Vector2 yTextVisibleRange = new Vector2(18, 26);
+	[SerializeField] private Vector2 yTextVisibleRange = new Vector2(16, 50);
 	
 
 	private bool companyState = true;
