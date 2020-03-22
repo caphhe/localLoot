@@ -69,7 +69,7 @@ public class WheelObject : MonoBehaviour
 			transform.localScale = new Vector3(scale, scale, scale);
 		}
 
-		if (transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
+		if (companyState && transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
 		{
 			companyNameText.gameObject.SetActive(true);
 		}
@@ -92,7 +92,7 @@ public class WheelObject : MonoBehaviour
 		companyLogoObj.SetActive(true);
 		voucherNameObj.SetActive(false);
 
-		if (transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
+		if (companyState && transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
 		{
 			companyNameText.gameObject.SetActive(true);
 		}
