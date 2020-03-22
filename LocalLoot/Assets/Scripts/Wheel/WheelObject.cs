@@ -135,7 +135,8 @@ public class WheelObject : MonoBehaviour
 	{
 		Debug.Log("Endwiggle");
 		transform.rotation = Quaternion.Euler(0, 0, 0);
-	}
+        
+    }
 
 	public void RemoveBox()
 	{
@@ -147,13 +148,14 @@ public class WheelObject : MonoBehaviour
 	{
 		Debug.Log("Drop");
 		Invoke("DropBox", removeTimer);
-	}
-
-	private void DropBox()
-	{		
         LootboxAnchorController ac = FindObjectOfType<LootboxAnchorController>();
         ac.transform.position = transform.position;
         transform.SetParent(FindObjectOfType<LootBoxAnchorTarget>().transform, true);
+    }
+
+	private void DropBox()
+	{
+        LootboxAnchorController ac = FindObjectOfType<LootboxAnchorController>();
         var rb = ac.gameObject.AddComponent<Rigidbody>();
         rb.AddTorque(dropTorque);
     }
