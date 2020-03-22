@@ -8,6 +8,7 @@ public class TriggerOpenAnimationOnStateEntry : MonoBehaviour, ISceneUpdatable
     Animator animator;
     public void OnEnter()
     {
+        animator = GetComponent<Animator>();
         animator.Play("PackageExplode");
     }
 
@@ -21,7 +22,6 @@ public class TriggerOpenAnimationOnStateEntry : MonoBehaviour, ISceneUpdatable
     }
     void Awake()
     {
-        animator = GetComponent<Animator>();
     }
 
 }

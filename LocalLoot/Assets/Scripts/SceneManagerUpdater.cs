@@ -12,7 +12,16 @@ public class SceneManagerUpdater : StateMachineBehaviour
         if (updatables != null)
         {
             foreach (ISceneUpdatable updatable in updatables)
-                updatable.OnUpdate();
+            {
+                try
+                {
+                    updatable.OnUpdate();
+                } catch (MissingReferenceException e)
+                {
+
+                }
+            }
+
         }
         
     }
@@ -23,7 +32,15 @@ public class SceneManagerUpdater : StateMachineBehaviour
         if (updatables != null)
         {
             foreach (ISceneUpdatable updatable in updatables)
-                updatable.OnEnter();
+            {
+                try
+                {
+                    updatable.OnEnter();
+                } catch (MissingReferenceException e)
+                {
+
+                }
+            }
         }
     }
 

@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     private static void ProcessInstantiate(GameObject inst, Transform parent, Vector3 position, Quaternion rotation)
     {
         SceneManager sm = FindObjectOfType<SceneManager>();
-        foreach (MonoBehaviour mb in inst.GetComponents<MonoBehaviour>())
+        foreach (MonoBehaviour mb in inst.GetComponentsInChildren<MonoBehaviour>(true))
         {
             if (mb is ISceneUpdatable &&
                 sm != null)
