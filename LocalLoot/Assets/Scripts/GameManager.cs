@@ -21,38 +21,44 @@ public class GameManager : MonoBehaviour
     #region Instantiate Methods
     public static GameObject Instantiate(GameObject obj)
     {
+        
+        GameObject inst = GameObject.Instantiate(obj);
         ProcessInstantiate(
-            obj,
+            inst,
             null,
-            obj.transform.position, 
+            inst.transform.position,
             Quaternion.identity);
-        return GameObject.Instantiate(obj);
+        return inst;
     }
 
     public static GameObject Instantiate(GameObject obj, Transform parent)
     {
+        
+        GameObject inst = GameObject.Instantiate(obj, parent);
         ProcessInstantiate(
-            obj,
+            inst,
             parent,
-            obj.transform.position, 
+            inst.transform.position,
             Quaternion.identity);
-        return GameObject.Instantiate(obj, parent);
+        return inst;
     }
     public static GameObject Instantiate(GameObject obj, Vector3 position, Quaternion rotation)
     {
+        
+        GameObject inst = GameObject.Instantiate(obj, position, rotation);
         ProcessInstantiate(
-            obj,
+            inst,
             null,
             position,
             rotation);
-        return GameObject.Instantiate(obj, position, rotation);
+        return inst;
     }
     #endregion
 
-    private static void ProcessInstantiate(GameObject obj, Transform parent, Vector3 position, Quaternion rotation)
+    private static void ProcessInstantiate(GameObject inst, Transform parent, Vector3 position, Quaternion rotation)
     {
         SceneManager sm = FindObjectOfType<SceneManager>();
-        foreach (MonoBehaviour mb in obj.GetComponents<MonoBehaviour>())
+        foreach (MonoBehaviour mb in inst.GetComponents<MonoBehaviour>())
         {
             if (mb is ISceneUpdatable &&
                 sm != null)

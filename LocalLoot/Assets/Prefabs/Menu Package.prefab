@@ -342,7 +342,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 7931895822096463381, guid: a4444143c6c92e848a6f7a5db2287c13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -399,15 +399,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: Pizzeria Grande
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a4444143c6c92e848a6f7a5db2287c13, type: 2}
+  m_sharedMaterial: {fileID: 7931895822096463381, guid: a4444143c6c92e848a6f7a5db2287c13,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1018,6 +1019,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &6529888693514654559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660877874703568107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38710dd653c21194a9cfe5d048ba3456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2012265751716350680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1027,7 +1040,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 501233139, guid: 14c994a3f7db73047b1965a957104364, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 411558349298324129, guid: 14c994a3f7db73047b1965a957104364,
         type: 3}
@@ -1054,6 +1067,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1991748904813302122, guid: 14c994a3f7db73047b1965a957104364,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2057752704158715951, guid: 14c994a3f7db73047b1965a957104364,
         type: 3}
       propertyPath: m_Mesh
@@ -1077,6 +1095,11 @@ PrefabInstance:
     - target: {fileID: 4798454767221215286, guid: 14c994a3f7db73047b1965a957104364,
         type: 3}
       propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5025189333105201523, guid: 14c994a3f7db73047b1965a957104364,
+        type: 3}
+      propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5046578921157719746, guid: 14c994a3f7db73047b1965a957104364,
@@ -1169,11 +1192,22 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9085161145359308336, guid: 14c994a3f7db73047b1965a957104364,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14c994a3f7db73047b1965a957104364, type: 3}
 --- !u!4 &8660877874703568104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7195801676736087600, guid: 14c994a3f7db73047b1965a957104364,
+    type: 3}
+  m_PrefabInstance: {fileID: 2012265751716350680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8660877874703568107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7195801676736087603, guid: 14c994a3f7db73047b1965a957104364,
     type: 3}
   m_PrefabInstance: {fileID: 2012265751716350680}
   m_PrefabAsset: {fileID: 0}
