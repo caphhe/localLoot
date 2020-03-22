@@ -47,7 +47,7 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 
 	public void OnInit(string stateName)
 	{
-		if (stateName == "StoreSelected")
+		if (stateName == "SelectingStore")
 		{
 			CleanUp();
 			for (int i = 0; i < visibleBoxes; i++)
@@ -61,6 +61,7 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 	// Update is called once per frame
 	public void OnUpdate()
     {
+		Debug.Log("test");
 		if (stopUpdate)
 		{
 			return;
@@ -210,7 +211,7 @@ public class WheelManager : MonoBehaviour, ISceneUpdatable
 #if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
-            if (Input.GetMouseButtonDown(0))
+			if (Input.GetMouseButtonDown(0))
             {
                 lastTouchPos = Input.mousePosition;
 				startTouchPos = Input.mousePosition;

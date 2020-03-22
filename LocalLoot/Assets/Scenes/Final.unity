@@ -1267,12 +1267,12 @@ PrefabInstance:
     - target: {fileID: 1219513915658590238, guid: 04bec742791457f4a914fde3d2144c7d,
         type: 3}
       propertyPath: _targetStateNames.Array.data[0]
-      value: StoreSelected
+      value: SelectingStore
       objectReference: {fileID: 0}
     - target: {fileID: 1219513915658590238, guid: 04bec742791457f4a914fde3d2144c7d,
         type: 3}
       propertyPath: _targetStateNames.Array.data[1]
-      value: CouponSelected
+      value: SelectingCoupon
       objectReference: {fileID: 0}
     - target: {fileID: 1219513915658590239, guid: 04bec742791457f4a914fde3d2144c7d,
         type: 3}
