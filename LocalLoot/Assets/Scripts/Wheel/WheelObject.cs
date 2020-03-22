@@ -17,6 +17,8 @@ public class WheelObject : MonoBehaviour
 	[SerializeField] private AnimationCurve removeScaleCurve = null;
 	[SerializeField] private float removeTimer = 1f;
 	[SerializeField] private Vector3 dropTorque = new Vector3(0,0,0);
+	[SerializeField] private Vector2 yTextVisibleRange = new Vector2(18, 26);
+	
 
 	private bool companyState = true;
 	private float stateTransitionTimer = 1;
@@ -66,7 +68,16 @@ public class WheelObject : MonoBehaviour
 			float scale = removeScaleCurve.Evaluate(removeT / removeTimer);
 			transform.localScale = new Vector3(scale, scale, scale);
 		}
-    }
+
+		if (transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
+		{
+			companyNameText.gameObject.SetActive(true);
+		}
+		else
+		{
+			companyNameText.gameObject.SetActive(false);
+		}
+	}
 
 	public void ReSkinCompany (CompanyScriptable company)
 	{
@@ -81,7 +92,14 @@ public class WheelObject : MonoBehaviour
 		companyLogoObj.SetActive(true);
 		voucherNameObj.SetActive(false);
 
-	
+		if (transform.position.y > yTextVisibleRange.x && transform.position.y < yTextVisibleRange.y)
+		{
+			companyNameText.gameObject.SetActive(true);
+		}
+		else
+		{
+			companyNameText.gameObject.SetActive(false);
+		}
 	}
 
 	public void ReSkinVoucher (CompanyScriptable company, int voucherID)
